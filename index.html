@@ -259,7 +259,7 @@ body.story .foot .links{color:var(--dark-muted)}
 <!-- ==================== APP ==================== -->
 <div id="app">
   <header>
-    <a class="brand" href="#" data-go="story-none">Camille Lambie-Knight</a>
+    <a class="brand" href="#" id="brandHome">Camille Lambie-Knight</a>
     <nav class="switch">
       <a href="#art" data-go="art" class="on">Art</a>
       <a href="#story" data-go="story">Story</a>
@@ -495,6 +495,17 @@ document.querySelectorAll('.door-card').forEach(d=>{
   const go=()=>{history.replaceState(null,'','#'+w);enter(w);};
   d.addEventListener('click',go);
   d.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}});
+});
+
+/* brand → back to landing */
+document.getElementById('brandHome').addEventListener('click',e=>{
+  e.preventDefault();
+  history.replaceState(null,'',location.pathname);
+  app.classList.remove('show');
+  landing.classList.remove('hide');
+  const p=document.getElementById('portrait');
+  if(p){p.classList.remove('bloom');setTimeout(()=>p.classList.add('bloom'),300);}
+  window.scrollTo(0,0);
 });
 
 /* deep-link: open straight to a page if hash present */
