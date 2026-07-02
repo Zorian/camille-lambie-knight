@@ -132,6 +132,20 @@ body.story .cbtn:hover{background:var(--paper-on-dark);color:var(--dark)}
 @media(hover:hover) and (min-width:721px){.carousel-wrap:hover .cbtn{display:flex}}
 .card .t{font-family:var(--serif);font-size:17px;font-weight:400}
 .card .d{font-size:12.5px;color:var(--muted);margin-top:3px}
+.enq{margin-top:11px;font-family:var(--sans);font-size:12px;letter-spacing:.05em;padding:9px 16px;border:1px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer;transition:background .3s,color .3s}
+.enq:hover{background:var(--ink);color:var(--paper)}
+.avail{margin-top:11px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+/* butterfly signature motif */
+.flutter{pointer-events:none}
+.flutter img{display:block;width:100%;height:auto;opacity:.5}
+.flutter .b-light{display:none}
+body.story .flutter .b-dark{display:none}
+body.story .flutter .b-light{display:block}
+.flutter.divider{width:140px;margin:6px auto}
+.flutter.accent{width:118px}
+#lbcta{margin-top:20px}
+#lbcta .btn{display:inline-block}
+#lbcta .st{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#9a94a2}
 .sold{position:absolute;top:12px;left:12px;z-index:3;background:var(--ink);color:var(--paper);font-size:10px;letter-spacing:.18em;text-transform:uppercase;padding:5px 10px}
 .swipe-hint{display:none;font-size:12px;color:var(--muted);margin-top:6px}
 @media(max-width:560px){.swipe-hint{display:block}}
@@ -210,9 +224,9 @@ body.story .foot .links{color:var(--dark-muted)}
 .foot .fine{width:100%;font-size:12px;color:var(--muted);margin-top:8px}
 
 /* lightbox */
-#lb{position:fixed;inset:0;z-index:80;background:rgba(10,9,12,.94);display:none;align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#lb{position:fixed;inset:0;z-index:80;background:rgba(10,9,12,.94);display:none;align-items:flex-start;justify-content:center;padding:24px;cursor:zoom-out;overflow-y:auto}
 #lb.on{display:flex}
-#lb .box{max-width:900px;text-align:center;color:#eee}
+#lb .box{max-width:900px;text-align:center;color:#eee;margin:auto}
 #lb .ph{max-height:78vh;max-width:min(92vw,720px);width:auto;margin:0 auto;border:1px solid #333;display:block;background:#111}
 #lb .lt{font-family:var(--serif);font-size:20px;margin-top:18px}
 #lb .ld{font-size:13px;color:#9a94a2;margin-top:4px}
@@ -230,6 +244,7 @@ body.story .foot .links{color:var(--dark-muted)}
       <div class="eyebrow">Artist · London</div>
       <h1 class="land-name">Camille<br>Lambie-Knight</h1>
       <p class="land-tag">Oil painter exploring transformation, resilience and human connection — and the story of finding <span class="accent">hope through art</span>.</p>
+      <div class="flutter accent" style="margin:24px 0 2px"><img class="b-dark" src="img/butterfly.png" alt=""><img class="b-light" src="img/butterfly-white.png" alt=""></div>
       <div class="doors-v">
         <div class="door-card" data-go="art" tabindex="0" role="button" aria-label="Explore Art">
           <div class="dc-l">
@@ -305,6 +320,7 @@ body.story .foot .links{color:var(--dark-muted)}
 
     <section class="section">
       <div class="wrap">
+        <div class="flutter divider reveal"><img class="b-dark" src="img/butterfly.png" alt=""><img class="b-light" src="img/butterfly-white.png" alt=""></div>
         <div class="cta reveal">
           <h3 class="serif">Commission a piece</h3>
           <p>Original works and bespoke commissions for private and corporate collectors, worldwide.</p>
@@ -339,6 +355,7 @@ body.story .foot .links{color:var(--dark-muted)}
     <div class="wrap story-hero reveal">
       <div class="eyebrow">Lived experience · Recovery · Hope</div>
       <h1>Art entered my life during one of its most <em>difficult chapters.</em></h1>
+      <div class="flutter accent reveal" style="margin-top:30px"><img class="b-dark" src="img/butterfly.png" alt=""><img class="b-light" src="img/butterfly-white.png" alt=""></div>
     </div>
 
     <section class="section">
@@ -413,6 +430,7 @@ body.story .foot .links{color:var(--dark-muted)}
 
   <footer>
     <div class="wrap foot">
+      <div style="width:100%"><div class="flutter" style="width:120px;margin:0 0 18px"><img class="b-dark" src="img/butterfly.png" alt=""><img class="b-light" src="img/butterfly-white.png" alt=""></div></div>
       <div class="n serif">Camille Lambie-Knight</div>
       <div class="links">
         <a href="#" data-go="art">Art</a>
@@ -426,7 +444,7 @@ body.story .foot .links{color:var(--dark-muted)}
 </div>
 
 <!-- lightbox -->
-<div id="lb"><div class="box"><img class="ph" id="lbimg" alt=""><div class="lt serif" id="lbt"></div><div class="ld" id="lbd"></div><div class="desc" id="lbdesc"></div></div></div>
+<div id="lb"><div class="box"><img class="ph" id="lbimg" alt=""><div class="lt serif" id="lbt"></div><div class="ld" id="lbd"></div><div class="desc" id="lbdesc"></div><div id="lbcta"></div></div></div>
 
 <script>
 /* ---------- artwork data (image:'' → drop Cloudflare URL here / REPLACE-IMG) ---------- */
@@ -490,15 +508,24 @@ function buildCard(it,type){
   const c=document.createElement('div');c.className='card';c.tabIndex=0;
   let meta;
   if(type==='work'){
-    const avail=it.status?badge[it.status]:'Enquire';
-    meta=`<div class="t">${it.t}${it.y?` <span style="color:var(--muted);font-size:13px">${it.y}</span>`:''}</div><div class="d">${it.m} · ${it.s} · ${avail}</div>`;
+    const yr=it.y?` <span style="color:var(--muted);font-size:13px">${it.y}</span>`:'';
+    meta=`<div class="t">${it.t}${yr}</div>
+          <div class="d">${it.m} · ${it.s}</div>
+          ${it.status?`<div class="avail">${badge[it.status]}</div>`:`<button class="enq" type="button">Enquire &rarr;</button>`}`;
   } else {
     meta=`<div class="t">${it.t}</div>`;
   }
   c.innerHTML=`<div class="frame">${it.status?`<div class="sold">${badge[it.status]}</div>`:''}<img src="${it.img}" alt="${it.t}" loading="lazy"></div><div class="meta">${meta}</div>`;
   c.addEventListener('click',()=>openLB(it,type));
   c.addEventListener('keydown',e=>{if(e.key==='Enter')openLB(it,type)});
+  const enq=c.querySelector('.enq');
+  if(enq)enq.addEventListener('click',ev=>{ev.stopPropagation();enquire(it.t);});
   return c;
+}
+function enquire(title){
+  const sub=encodeURIComponent('Art enquiry — '+title);
+  const body=encodeURIComponent('Hi Camille,\n\nI\u2019m interested in \u201c'+title+'\u201d. Could you let me know its availability, price and details?\n\nThank you,');
+  window.location.href='mailto:hello@camillelambieknight.com?subject='+sub+'&body='+body;
 }
 function fill(id,ar,type){const el=document.getElementById(id);if(!el)return;ar.forEach(it=>el.appendChild(buildCard(it,type)));}
 fill('gallery',works,'work');
@@ -522,6 +549,13 @@ function openLB(w,type){
   document.getElementById('lbt').textContent=w.t+(w.y?` · ${w.y}`:'');
   document.getElementById('lbd').textContent=(type==='work')?`${w.m} · ${w.s}${w.status?' · '+badge[w.status]:''}`:'';
   document.getElementById('lbdesc').textContent=w.d||'';
+  const cta=document.getElementById('lbcta');
+  if(type==='work'&&!w.status){
+    cta.innerHTML='<button class="btn" type="button" id="lbEnq">Enquire about this piece &rarr;</button>';
+    document.getElementById('lbEnq').addEventListener('click',()=>enquire(w.t));
+  } else if(type==='work'){
+    cta.innerHTML=`<div class="st">${badge[w.status]}</div>`;
+  } else { cta.innerHTML=''; }
   lb.classList.add('on');
 }
 lb.addEventListener('click',()=>lb.classList.remove('on'));
