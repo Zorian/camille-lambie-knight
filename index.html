@@ -592,6 +592,7 @@ document.getElementById('brandHome').addEventListener('click',e=>{
   history.replaceState(null,'',location.pathname);
   app.classList.remove('show');
   landing.classList.remove('hide');
+  document.body.classList.remove('story');
   const p=document.getElementById('portrait');
   if(p){p.classList.remove('bloom');setTimeout(()=>p.classList.add('bloom'),300);}
   window.scrollTo(0,0);
